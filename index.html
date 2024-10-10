@@ -124,7 +124,7 @@
     </div>
 
     <div class="response" id="response">
-        <p>Já taky! 🥰</p>
+        <p id="responseText">Já taky! 🥰</p>
         <img src="https://media.tenor.com/-J9wqAoLbRQAAAAi/happy.gif" alt="Kočička se raduje">
     </div>
 
@@ -150,16 +150,21 @@
 
         setInterval(createHeart, 300);
 
-        document.getElementById('yesButton').addEventListener('click', function() {
-            // Zobrazí odpověď a GIF
+        // Funkce pro zobrazení odpovědi
+        function showResponse(text) {
             document.getElementById('response').style.display = 'block';
-
-            // Skryje text a tlačítka
+            document.getElementById('responseText').textContent = text;
             document.getElementById('mainTitle').classList.add('hidden');
             document.getElementById('mainText').classList.add('hidden');
             document.getElementById('buttonContainer').classList.add('hidden');
+        }
+
+        // Když klikne na "Ano"
+        document.getElementById('yesButton').addEventListener('click', function() {
+            showResponse("Já taky! 🥰");
         });
 
+        // Tlačítko "Ne" uhýbá
         const noButton = document.getElementById('noButton');
         let isMouseNearNoButton = false;
 
@@ -177,6 +182,11 @@
         noButton.addEventListener('mouseleave', function() {
             isMouseNearNoButton = false;
         });
+
+        // Nastavení časovače na 10 sekund
+        setTimeout(function() {
+            showResponse("Mlčení znamená souhlas 🥰");
+        }, 10000); // 10 sekund = 10000 ms
     </script>
 
 </body>
