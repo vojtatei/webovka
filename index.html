@@ -159,8 +159,14 @@
             document.getElementById('buttonContainer').classList.add('hidden');
         }
 
+        // Časovač, který se dá zrušit
+        let timeoutId = setTimeout(function() {
+            showResponse("Mlčení znamená souhlas 🥰");
+        }, 10000); // 10 sekund = 10000 ms
+
         // Když klikne na "Ano"
         document.getElementById('yesButton').addEventListener('click', function() {
+            clearTimeout(timeoutId); // Zruší časovač
             showResponse("Já taky! 🥰");
         });
 
@@ -182,11 +188,6 @@
         noButton.addEventListener('mouseleave', function() {
             isMouseNearNoButton = false;
         });
-
-        // Nastavení časovače na 10 sekund
-        setTimeout(function() {
-            showResponse("Mlčení znamená souhlas 🥰");
-        }, 10000); // 10 sekund = 10000 ms
     </script>
 
 </body>
