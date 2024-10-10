@@ -111,6 +111,18 @@
         .hidden {
             display: none;
         }
+
+        #countdown {
+            font-size: 1.5rem;
+            color: #ff3366;
+            margin-top: 20px;
+        }
+
+        #countdownLabel {
+            font-size: 1.5rem;
+            color: #333;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -126,10 +138,14 @@
     <div class="response" id="response">
         <p id="responseText">Já taky! 🥰</p>
         <img src="https://media.tenor.com/-J9wqAoLbRQAAAAi/happy.gif" alt="Kočička se raduje">
+        <div id="countdownLabel" class="hidden">Čas než se uvidíme:</div>
+        <div id="countdown" class="hidden"></div>
     </div>
 
     <!-- Padající srdíčka -->
     <script>
+        let hasResponded = false;
+
         function createHeart() {
             const heart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             heart.setAttribute("viewBox", "0 0 32 29.6");
@@ -152,11 +168,17 @@
 
         // Funkce pro zobrazení odpovědi
         function showResponse(text) {
-            document.getElementById('response').style.display = 'block';
-            document.getElementById('responseText').textContent = text;
-            document.getElementById('mainTitle').classList.add('hidden');
-            document.getElementById('mainText').classList.add('hidden');
-            document.getElementById('buttonContainer').classList.add('hidden');
+            if (!hasResponded) {
+                document.getElementById('response').style.display = 'block';
+                document.getElementById('responseText').textContent = text;
+                document.getElementById('mainTitle').classList.add('hidden');
+                document.getElementById('mainText').classList.add('hidden');
+                document.getElementById('buttonContainer').classList.add('hidden');
+                document.getElementById('countdownLabel').classList.remove('hidden');
+                document.getElementById('countdown').classList.remove('hidden');
+                startCountdown();
+                hasResponded = true;
+            }
         }
 
         // Časovač, který se dá zrušit
@@ -188,6 +210,31 @@
         noButton.addEventListener('mouseleave', function() {
             isMouseNearNoButton = false;
         });
+
+        // Funkce pro spuštění odpočtu do zítřejších 22:30
+        function startCountdown() {
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 1); // Nastavení na zítra
+            targetDate.setHours(22, 30, 0); // Nastavení času na 22:30
+
+            function updateCountdown() {
+                const now = new Date();
+                const diff = targetDate - now;
+
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').textContent = `${hours} hodin ${minutes} minut ${seconds} sekund`;
+
+                if (diff < 0) {
+                    clearInterval(countdownInterval); // Zastaví odpočet, pokud je čas už prošel
+                    document.getElementById('countdown').textContent = "Už je čas! 😊";
+                }
+            }
+
+            const countdownInterval = setInterval(updateCountdown, 1000);
+        }
     </script>
 
 </body>
