@@ -87,11 +87,14 @@
         #noButton {
             position: relative;
         }
+<<<<<<< HEAD
 
         /* Skryté prvky po kliknutí na tlačítko */
         .hidden {
             display: none;
         }
+=======
+>>>>>>> 2697f62455430151ed3b71ece7c5d5f0f9399de6
     </style>
 </head>
 <body>
@@ -149,6 +152,23 @@
             }
         });
 
+<<<<<<< HEAD
+=======
+        const noButton = document.getElementById('noButton');
+        let isMouseNearNoButton = false;
+
+        noButton.addEventListener('mouseover', function() {
+            if (!isMouseNearNoButton) {
+                const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
+                const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
+                noButton.style.position = 'absolute';
+                noButton.style.left = `${randomX}px`;
+                noButton.style.top = `${randomY}px`;
+                isMouseNearNoButton = true;
+            }
+        });
+
+>>>>>>> 2697f62455430151ed3b71ece7c5d5f0f9399de6
         noButton.addEventListener('mouseleave', function() {
             isMouseNearNoButton = false;
         });
