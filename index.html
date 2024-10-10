@@ -24,18 +24,21 @@
             color: #ff66b2;
             font-size: 3rem;
             margin-bottom: 20px;
+            z-index: 1;
         }
 
         p {
             font-size: 1.5rem;
             color: #333;
             margin-bottom: 30px;
+            z-index: 1;
         }
 
         .buttons {
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 1;
         }
 
         button {
@@ -48,6 +51,7 @@
             margin: 10px 0;
             cursor: pointer;
             transition: background-color 0.3s;
+            z-index: 1;
         }
 
         button:hover {
@@ -56,13 +60,14 @@
 
         .heart {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: red;
-            clip-path: polygon(50% 0%, 100% 38%, 79% 100%, 50% 78%, 21% 100%, 0% 38%);
-            animation: fall 5s infinite linear;
+            width: 30px;
+            height: 30px;
+            fill: #ff3366;
+            animation: fall 5s infinite linear, rotate 5s infinite ease-in-out;
+            opacity: 0.8;
         }
 
+        /* Animace padajících srdíček */
         @keyframes fall {
             0% {
                 top: -10%;
@@ -74,9 +79,23 @@
             }
         }
 
+        /* Jemná rotace srdíček během pádu */
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(15deg);
+            }
+            100% {
+                transform: rotate(-15deg);
+            }
+        }
+
         .response {
             display: none;
             margin-top: 20px;
+            z-index: 1;
         }
 
         .response img {
@@ -87,14 +106,11 @@
         #noButton {
             position: relative;
         }
-<<<<<<< HEAD
 
         /* Skryté prvky po kliknutí na tlačítko */
         .hidden {
             display: none;
         }
-=======
->>>>>>> 2697f62455430151ed3b71ece7c5d5f0f9399de6
     </style>
 </head>
 <body>
@@ -115,15 +131,21 @@
     <!-- Padající srdíčka -->
     <script>
         function createHeart() {
-            const heart = document.createElement('div');
+            const heart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            heart.setAttribute("viewBox", "0 0 32 29.6");
             heart.classList.add('heart');
+            heart.innerHTML = '<path d="M23.6,0C20.9,0,18.4,1.4,16,3.8C13.6,1.4,11.1,0,8.4,0C3.8,0,0,3.8,0,8.4c0,4.4,3.5,7.7,10.2,13.7c1.5,1.3,3.2,2.7,5.1,4.3c1.9-1.6,3.6-3,5.1-4.3C28.5,16.1,32,12.8,32,8.4C32,3.8,28.2,0,23.6,0z" />';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's'; // Pád od 3 do 6 sekund
+            heart.style.opacity = Math.random() * 0.5 + 0.5; // Náhodná průhlednost
+            heart.style.transform = `scale(${Math.random() * 0.5 + 0.5})`; // Náhodná velikost
+            heart.style.position = 'absolute';
+            heart.style.top = '-10%';
             document.body.appendChild(heart);
 
             setTimeout(() => {
                 heart.remove();
-            }, 5000);
+            }, 6000); // Po 6 sekundách srdíčko zmizí
         }
 
         setInterval(createHeart, 300);
@@ -152,23 +174,6 @@
             }
         });
 
-<<<<<<< HEAD
-=======
-        const noButton = document.getElementById('noButton');
-        let isMouseNearNoButton = false;
-
-        noButton.addEventListener('mouseover', function() {
-            if (!isMouseNearNoButton) {
-                const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
-                const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
-                noButton.style.position = 'absolute';
-                noButton.style.left = `${randomX}px`;
-                noButton.style.top = `${randomY}px`;
-                isMouseNearNoButton = true;
-            }
-        });
-
->>>>>>> 2697f62455430151ed3b71ece7c5d5f0f9399de6
         noButton.addEventListener('mouseleave', function() {
             isMouseNearNoButton = false;
         });
