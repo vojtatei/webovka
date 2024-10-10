@@ -14,6 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
             text-align: center;
             position: relative;
@@ -33,7 +34,8 @@
 
         .buttons {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
 
         button {
@@ -43,7 +45,7 @@
             border: none;
             border-radius: 5px;
             font-size: 1.2rem;
-            margin: 0 10px;
+            margin: 10px 0;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -57,7 +59,7 @@
             width: 20px;
             height: 20px;
             background-color: red;
-            clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 50% 75%, 25% 100%, 0% 35%);
+            clip-path: polygon(50% 0%, 100% 38%, 79% 100%, 50% 78%, 21% 100%, 0% 38%);
             animation: fall 5s infinite linear;
         }
 
@@ -80,6 +82,10 @@
         .response img {
             width: 200px;
             border-radius: 10px;
+        }
+
+        #noButton {
+            position: relative;
         }
     </style>
 </head>
@@ -118,8 +124,22 @@
             document.getElementById('response').style.display = 'block';
         });
 
-        document.getElementById('noButton').addEventListener('click', function() {
-            alert('To nevadí, já se stejně moc těším na tebe! 😊');
+        const noButton = document.getElementById('noButton');
+        let isMouseNearNoButton = false;
+
+        noButton.addEventListener('mouseover', function() {
+            if (!isMouseNearNoButton) {
+                const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
+                const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
+                noButton.style.position = 'absolute';
+                noButton.style.left = `${randomX}px`;
+                noButton.style.top = `${randomY}px`;
+                isMouseNearNoButton = true;
+            }
+        });
+
+        noButton.addEventListener('mouseleave', function() {
+            isMouseNearNoButton = false;
         });
     </script>
 
