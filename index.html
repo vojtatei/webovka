@@ -14,6 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
             text-align: center;
             position: relative;
@@ -33,7 +34,8 @@
 
         .buttons {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
 
         button {
@@ -43,7 +45,7 @@
             border: none;
             border-radius: 5px;
             font-size: 1.2rem;
-            margin: 0 10px;
+            margin: 10px 0;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -57,7 +59,7 @@
             width: 20px;
             height: 20px;
             background-color: red;
-            clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 50% 75%, 25% 100%, 0% 35%);
+            clip-path: polygon(50% 0%, 100% 38%, 79% 100%, 50% 78%, 21% 100%, 0% 38%);
             animation: fall 5s infinite linear;
         }
 
@@ -81,21 +83,30 @@
             width: 200px;
             border-radius: 10px;
         }
+
+        #noButton {
+            position: relative;
+        }
+
+        /* Skryté prvky po kliknutí na tlačítko */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Ahoj, lásko! ❤️</h1>
-    <p>Těšíš se, že zítra přijedu?</p>
+    <h1 id="mainTitle">Ahoj, lásko! ❤️</h1>
+    <p id="mainText">Těšíš se, že zítra přijedu?</p>
 
-    <div class="buttons">
+    <div class="buttons" id="buttonContainer">
         <button id="yesButton">Ano</button>
         <button id="noButton">Ne</button>
     </div>
 
     <div class="response" id="response">
         <p>Já taky! 🥰</p>
-        <img src="https://media.giphy.com/media/J93sVmfYBtsRi/giphy.gif" alt="Kočička se raduje">
+        <img src="https://media.tenor.com/-J9wqAoLbRQAAAAi/happy.gif" alt="Kočička se raduje">
     </div>
 
     <!-- Padající srdíčka -->
@@ -115,11 +126,31 @@
         setInterval(createHeart, 300);
 
         document.getElementById('yesButton').addEventListener('click', function() {
+            // Zobrazí odpověď a GIF
             document.getElementById('response').style.display = 'block';
+
+            // Skryje text a tlačítka
+            document.getElementById('mainTitle').classList.add('hidden');
+            document.getElementById('mainText').classList.add('hidden');
+            document.getElementById('buttonContainer').classList.add('hidden');
         });
 
-        document.getElementById('noButton').addEventListener('click', function() {
-            alert('To nevadí, já se stejně moc těším na tebe! 😊');
+        const noButton = document.getElementById('noButton');
+        let isMouseNearNoButton = false;
+
+        noButton.addEventListener('mouseover', function() {
+            if (!isMouseNearNoButton) {
+                const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
+                const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
+                noButton.style.position = 'absolute';
+                noButton.style.left = `${randomX}px`;
+                noButton.style.top = `${randomY}px`;
+                isMouseNearNoButton = true;
+            }
+        });
+
+        noButton.addEventListener('mouseleave', function() {
+            isMouseNearNoButton = false;
         });
     </script>
 
