@@ -3,49 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro tebe</title>
+    <title>Pro tebe, lásko</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6e6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #f0f8ff;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .container {
             text-align: center;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
 
         h1 {
-            color: #ff69b4;
+            color: #ff66b2;
             font-size: 3rem;
+            margin-bottom: 20px;
         }
 
         p {
-            color: #333;
             font-size: 1.5rem;
-            margin: 20px 0;
+            color: #333;
+            margin-bottom: 30px;
         }
 
-        img {
-            width: 200px;
-            border-radius: 50%;
+        .buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            background-color: #ff66b2;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff99cc;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 50% 75%, 25% 100%, 0% 35%);
+            animation: fall 5s infinite linear;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                opacity: 1;
+            }
+            100% {
+                top: 110%;
+                opacity: 0;
+            }
+        }
+
+        .response {
+            display: none;
             margin-top: 20px;
+        }
+
+        .response img {
+            width: 200px;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Ahoj, lásko!</h1>
-        <p>Nemůžu se dočkat, až tě zítra uvidím. Moc mi chybíš! 💖</p>
-        <img src="https://example.com/your_image.jpg" alt="Tvoje fotka">
+
+    <h1>Ahoj, lásko! ❤️</h1>
+    <p>Těšíš se, že zítra přijedu?</p>
+
+    <div class="buttons">
+        <button id="yesButton">Ano</button>
+        <button id="noButton">Ne</button>
     </div>
+
+    <div class="response" id="response">
+        <p>Já taky! 🥰</p>
+        <img src="https://media.giphy.com/media/J93sVmfYBtsRi/giphy.gif" alt="Kočička se raduje">
+    </div>
+
+    <!-- Padající srdíčka -->
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        document.getElementById('yesButton').addEventListener('click', function() {
+            document.getElementById('response').style.display = 'block';
+        });
+
+        document.getElementById('noButton').addEventListener('click', function() {
+            alert('To nevadí, já se stejně moc těším na tebe! 😊');
+        });
+    </script>
+
 </body>
 </html>
